@@ -29,7 +29,7 @@ module ActiveAdminParanoia
         end
       end
 
-      action_item :restore, only: :show do
+      action_item :restore, only: :show, if: proc { resource.paranoia_destroyed? } do
         link_to(I18n.t('active_admin_paranoia.restore_model', model: resource_class.to_s.titleize), "#{resource_path(resource)}/restore", method: :put, data: { confirm: I18n.t('active_admin_paranoia.restore_confirmation') }) if authorized?(ActiveAdminParanoia::Auth::RESTORE, resource)
       end
 
